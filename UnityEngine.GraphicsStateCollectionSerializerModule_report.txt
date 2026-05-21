@@ -1,3 +1,0 @@
-Assembly: C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.GraphicsStateCollectionSerializerModule.dll
-
-Type: <Module>

@@ -1,9 +1,0 @@
-Assembly: C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Unity.XR.OpenXR.Features.OculusQuestSupport.dll
-
-Type: <Module>
-Type: UnitySourceGeneratedAssemblyMonoScriptTypes_v1
-  Method: Get
-  Method: .ctor
-Type: UnityEngine.XR.OpenXR.Features.OculusQuestSupport.OculusQuestFeature
-  Method: .ctor
-Type: <PrivateImplementationDetails>

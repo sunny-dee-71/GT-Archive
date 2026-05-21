@@ -1,7 +1,0 @@
-Assembly: C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.PerformanceReportingModule.dll
-
-Type: <Module>
-Type: UnityEngine.Analytics.PerformanceReporting
-  Method: get_enabled
-  Method: set_enabled
-  Method: get_graphicsInitializationFinishTime

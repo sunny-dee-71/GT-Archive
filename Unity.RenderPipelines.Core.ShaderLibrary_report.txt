@@ -1,9 +1,0 @@
-Assembly: C:\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll
-
-Type: <Module>
-Type: DummyShaderLibrary
-  Method: .ctor
-Type: UnitySourceGeneratedAssemblyMonoScriptTypes_v1
-  Method: Get
-  Method: .ctor
-Type: <PrivateImplementationDetails>
