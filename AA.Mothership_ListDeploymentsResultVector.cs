@@ -1,0 +1,467 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+public class ListDeploymentsResultVector : IDisposable, IEnumerable, IEnumerable<MothershipTitleEnvDeployment>
+{
+	public sealed class ListDeploymentsResultVectorEnumerator : IEnumerator, IEnumerator<MothershipTitleEnvDeployment>, IDisposable
+	{
+		private ListDeploymentsResultVector collectionRef;
+
+		private int currentIndex;
+
+		private object currentObject;
+
+		private int currentSize;
+
+		public MothershipTitleEnvDeployment Current
+		{
+			get
+			{
+				if (currentIndex == -1)
+				{
+					throw new InvalidOperationException("Enumeration not started.");
+				}
+				if (currentIndex > currentSize - 1)
+				{
+					throw new InvalidOperationException("Enumeration finished.");
+				}
+				if (currentObject == null)
+				{
+					throw new InvalidOperationException("Collection modified.");
+				}
+				return (MothershipTitleEnvDeployment)currentObject;
+			}
+		}
+
+		object IEnumerator.Current => Current;
+
+		public ListDeploymentsResultVectorEnumerator(ListDeploymentsResultVector collection)
+		{
+			collectionRef = collection;
+			currentIndex = -1;
+			currentObject = null;
+			currentSize = collectionRef.Count;
+		}
+
+		public bool MoveNext()
+		{
+			int count = collectionRef.Count;
+			int num;
+			if (currentIndex + 1 < count)
+			{
+				num = ((count == currentSize) ? 1 : 0);
+				if (num != 0)
+				{
+					currentIndex++;
+					currentObject = collectionRef[currentIndex];
+					return (byte)num != 0;
+				}
+			}
+			else
+			{
+				num = 0;
+			}
+			currentObject = null;
+			return (byte)num != 0;
+		}
+
+		public void Reset()
+		{
+			currentIndex = -1;
+			currentObject = null;
+			if (collectionRef.Count != currentSize)
+			{
+				throw new InvalidOperationException("Collection modified.");
+			}
+		}
+
+		public void Dispose()
+		{
+			currentIndex = -1;
+			currentObject = null;
+		}
+	}
+
+	private HandleRef swigCPtr;
+
+	protected bool swigCMemOwn;
+
+	public bool IsFixedSize => false;
+
+	public bool IsReadOnly => false;
+
+	public MothershipTitleEnvDeployment this[int index]
+	{
+		get
+		{
+			return getitem(index);
+		}
+		set
+		{
+			setitem(index, value);
+		}
+	}
+
+	public int Capacity
+	{
+		get
+		{
+			return (int)capacity();
+		}
+		set
+		{
+			if (value < 0 || (uint)value < size())
+			{
+				throw new ArgumentOutOfRangeException("Capacity");
+			}
+			reserve((uint)value);
+		}
+	}
+
+	public int Count => (int)size();
+
+	public bool IsSynchronized => false;
+
+	internal ListDeploymentsResultVector(IntPtr cPtr, bool cMemoryOwn)
+	{
+		swigCMemOwn = cMemoryOwn;
+		swigCPtr = new HandleRef(this, cPtr);
+	}
+
+	internal static HandleRef getCPtr(ListDeploymentsResultVector obj)
+	{
+		return obj?.swigCPtr ?? new HandleRef(null, IntPtr.Zero);
+	}
+
+	internal static HandleRef swigRelease(ListDeploymentsResultVector obj)
+	{
+		if (obj != null)
+		{
+			if (!obj.swigCMemOwn)
+			{
+				throw new ApplicationException("Cannot release ownership as memory is not owned");
+			}
+			HandleRef result = obj.swigCPtr;
+			obj.swigCMemOwn = false;
+			obj.Dispose();
+			return result;
+		}
+		return new HandleRef(null, IntPtr.Zero);
+	}
+
+	~ListDeploymentsResultVector()
+	{
+		Dispose(disposing: false);
+	}
+
+	public void Dispose()
+	{
+		Dispose(disposing: true);
+		GC.SuppressFinalize(this);
+	}
+
+	protected virtual void Dispose(bool disposing)
+	{
+		lock (this)
+		{
+			if (swigCPtr.Handle != IntPtr.Zero)
+			{
+				if (swigCMemOwn)
+				{
+					swigCMemOwn = false;
+					MothershipApiPINVOKE.delete_ListDeploymentsResultVector(swigCPtr);
+				}
+				swigCPtr = new HandleRef(null, IntPtr.Zero);
+			}
+		}
+	}
+
+	public ListDeploymentsResultVector(IEnumerable c)
+		: this()
+	{
+		if (c == null)
+		{
+			throw new ArgumentNullException("c");
+		}
+		foreach (MothershipTitleEnvDeployment item in c)
+		{
+			Add(item);
+		}
+	}
+
+	public ListDeploymentsResultVector(IEnumerable<MothershipTitleEnvDeployment> c)
+		: this()
+	{
+		if (c == null)
+		{
+			throw new ArgumentNullException("c");
+		}
+		foreach (MothershipTitleEnvDeployment item in c)
+		{
+			Add(item);
+		}
+	}
+
+	public void CopyTo(MothershipTitleEnvDeployment[] array)
+	{
+		CopyTo(0, array, 0, Count);
+	}
+
+	public void CopyTo(MothershipTitleEnvDeployment[] array, int arrayIndex)
+	{
+		CopyTo(0, array, arrayIndex, Count);
+	}
+
+	public void CopyTo(int index, MothershipTitleEnvDeployment[] array, int arrayIndex, int count)
+	{
+		if (array == null)
+		{
+			throw new ArgumentNullException("array");
+		}
+		if (index < 0)
+		{
+			throw new ArgumentOutOfRangeException("index", "Value is less than zero");
+		}
+		if (arrayIndex < 0)
+		{
+			throw new ArgumentOutOfRangeException("arrayIndex", "Value is less than zero");
+		}
+		if (count < 0)
+		{
+			throw new ArgumentOutOfRangeException("count", "Value is less than zero");
+		}
+		if (array.Rank > 1)
+		{
+			throw new ArgumentException("Multi dimensional array.", "array");
+		}
+		if (index + count > Count || arrayIndex + count > array.Length)
+		{
+			throw new ArgumentException("Number of elements to copy is too large.");
+		}
+		for (int i = 0; i < count; i++)
+		{
+			array.SetValue(getitemcopy(index + i), arrayIndex + i);
+		}
+	}
+
+	public MothershipTitleEnvDeployment[] ToArray()
+	{
+		MothershipTitleEnvDeployment[] array = new MothershipTitleEnvDeployment[Count];
+		CopyTo(array);
+		return array;
+	}
+
+	IEnumerator<MothershipTitleEnvDeployment> IEnumerable<MothershipTitleEnvDeployment>.GetEnumerator()
+	{
+		return new ListDeploymentsResultVectorEnumerator(this);
+	}
+
+	IEnumerator IEnumerable.GetEnumerator()
+	{
+		return new ListDeploymentsResultVectorEnumerator(this);
+	}
+
+	public ListDeploymentsResultVectorEnumerator GetEnumerator()
+	{
+		return new ListDeploymentsResultVectorEnumerator(this);
+	}
+
+	public void Clear()
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_Clear(swigCPtr);
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public void Add(MothershipTitleEnvDeployment x)
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_Add(swigCPtr, MothershipTitleEnvDeployment.getCPtr(x));
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	private uint size()
+	{
+		uint result = MothershipApiPINVOKE.ListDeploymentsResultVector_size(swigCPtr);
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+		return result;
+	}
+
+	private uint capacity()
+	{
+		uint result = MothershipApiPINVOKE.ListDeploymentsResultVector_capacity(swigCPtr);
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+		return result;
+	}
+
+	private void reserve(uint n)
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_reserve(swigCPtr, n);
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public ListDeploymentsResultVector()
+		: this(MothershipApiPINVOKE.new_ListDeploymentsResultVector__SWIG_0(), cMemoryOwn: true)
+	{
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public ListDeploymentsResultVector(ListDeploymentsResultVector other)
+		: this(MothershipApiPINVOKE.new_ListDeploymentsResultVector__SWIG_1(getCPtr(other)), cMemoryOwn: true)
+	{
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public ListDeploymentsResultVector(int capacity)
+		: this(MothershipApiPINVOKE.new_ListDeploymentsResultVector__SWIG_2(capacity), cMemoryOwn: true)
+	{
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	private MothershipTitleEnvDeployment getitemcopy(int index)
+	{
+		MothershipTitleEnvDeployment result = new MothershipTitleEnvDeployment(MothershipApiPINVOKE.ListDeploymentsResultVector_getitemcopy(swigCPtr, index), cMemoryOwn: true);
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+		return result;
+	}
+
+	private MothershipTitleEnvDeployment getitem(int index)
+	{
+		MothershipTitleEnvDeployment result = new MothershipTitleEnvDeployment(MothershipApiPINVOKE.ListDeploymentsResultVector_getitem(swigCPtr, index), cMemoryOwn: false);
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+		return result;
+	}
+
+	private void setitem(int index, MothershipTitleEnvDeployment val)
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_setitem(swigCPtr, index, MothershipTitleEnvDeployment.getCPtr(val));
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public void AddRange(ListDeploymentsResultVector values)
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_AddRange(swigCPtr, getCPtr(values));
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public ListDeploymentsResultVector GetRange(int index, int count)
+	{
+		IntPtr intPtr = MothershipApiPINVOKE.ListDeploymentsResultVector_GetRange(swigCPtr, index, count);
+		ListDeploymentsResultVector result = ((intPtr == IntPtr.Zero) ? null : new ListDeploymentsResultVector(intPtr, cMemoryOwn: true));
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+		return result;
+	}
+
+	public void Insert(int index, MothershipTitleEnvDeployment x)
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_Insert(swigCPtr, index, MothershipTitleEnvDeployment.getCPtr(x));
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public void InsertRange(int index, ListDeploymentsResultVector values)
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_InsertRange(swigCPtr, index, getCPtr(values));
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public void RemoveAt(int index)
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_RemoveAt(swigCPtr, index);
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public void RemoveRange(int index, int count)
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_RemoveRange(swigCPtr, index, count);
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public static ListDeploymentsResultVector Repeat(MothershipTitleEnvDeployment value, int count)
+	{
+		IntPtr intPtr = MothershipApiPINVOKE.ListDeploymentsResultVector_Repeat(MothershipTitleEnvDeployment.getCPtr(value), count);
+		ListDeploymentsResultVector result = ((intPtr == IntPtr.Zero) ? null : new ListDeploymentsResultVector(intPtr, cMemoryOwn: true));
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+		return result;
+	}
+
+	public void Reverse()
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_Reverse__SWIG_0(swigCPtr);
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public void Reverse(int index, int count)
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_Reverse__SWIG_1(swigCPtr, index, count);
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+
+	public void SetRange(int index, ListDeploymentsResultVector values)
+	{
+		MothershipApiPINVOKE.ListDeploymentsResultVector_SetRange(swigCPtr, index, getCPtr(values));
+		if (MothershipApiPINVOKE.SWIGPendingException.Pending)
+		{
+			throw MothershipApiPINVOKE.SWIGPendingException.Retrieve();
+		}
+	}
+}

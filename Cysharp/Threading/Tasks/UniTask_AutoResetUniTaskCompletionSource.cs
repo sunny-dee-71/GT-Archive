@@ -1,0 +1,133 @@
+using System;
+using System.Diagnostics;
+using System.Threading;
+
+namespace Cysharp.Threading.Tasks;
+
+public class AutoResetUniTaskCompletionSource<T> : IUniTaskSource<T>, IUniTaskSource, ITaskPoolNode<AutoResetUniTaskCompletionSource<T>>, IPromise<T>, IResolvePromise<T>, IRejectPromise, ICancelPromise
+{
+	private static TaskPool<AutoResetUniTaskCompletionSource<T>> pool;
+
+	private AutoResetUniTaskCompletionSource<T> nextNode;
+
+	private UniTaskCompletionSourceCore<T> core;
+
+	public ref AutoResetUniTaskCompletionSource<T> NextNode => ref nextNode;
+
+	public UniTask<T> Task
+	{
+		[DebuggerHidden]
+		get
+		{
+			return new UniTask<T>(this, core.Version);
+		}
+	}
+
+	static AutoResetUniTaskCompletionSource()
+	{
+		TaskPool.RegisterSizeGetter(typeof(AutoResetUniTaskCompletionSource<T>), () => pool.Size);
+	}
+
+	private AutoResetUniTaskCompletionSource()
+	{
+	}
+
+	[DebuggerHidden]
+	public static AutoResetUniTaskCompletionSource<T> Create()
+	{
+		if (!pool.TryPop(out var result))
+		{
+			return new AutoResetUniTaskCompletionSource<T>();
+		}
+		return result;
+	}
+
+	[DebuggerHidden]
+	public static AutoResetUniTaskCompletionSource<T> CreateFromCanceled(CancellationToken cancellationToken, out short token)
+	{
+		AutoResetUniTaskCompletionSource<T> autoResetUniTaskCompletionSource = Create();
+		autoResetUniTaskCompletionSource.TrySetCanceled(cancellationToken);
+		token = autoResetUniTaskCompletionSource.core.Version;
+		return autoResetUniTaskCompletionSource;
+	}
+
+	[DebuggerHidden]
+	public static AutoResetUniTaskCompletionSource<T> CreateFromException(Exception exception, out short token)
+	{
+		AutoResetUniTaskCompletionSource<T> autoResetUniTaskCompletionSource = Create();
+		autoResetUniTaskCompletionSource.TrySetException(exception);
+		token = autoResetUniTaskCompletionSource.core.Version;
+		return autoResetUniTaskCompletionSource;
+	}
+
+	[DebuggerHidden]
+	public static AutoResetUniTaskCompletionSource<T> CreateFromResult(T result, out short token)
+	{
+		AutoResetUniTaskCompletionSource<T> autoResetUniTaskCompletionSource = Create();
+		autoResetUniTaskCompletionSource.TrySetResult(result);
+		token = autoResetUniTaskCompletionSource.core.Version;
+		return autoResetUniTaskCompletionSource;
+	}
+
+	[DebuggerHidden]
+	public bool TrySetResult(T result)
+	{
+		return core.TrySetResult(result);
+	}
+
+	[DebuggerHidden]
+	public bool TrySetCanceled(CancellationToken cancellationToken = default(CancellationToken))
+	{
+		return core.TrySetCanceled(cancellationToken);
+	}
+
+	[DebuggerHidden]
+	public bool TrySetException(Exception exception)
+	{
+		return core.TrySetException(exception);
+	}
+
+	[DebuggerHidden]
+	public T GetResult(short token)
+	{
+		try
+		{
+			return core.GetResult(token);
+		}
+		finally
+		{
+			TryReturn();
+		}
+	}
+
+	[DebuggerHidden]
+	void IUniTaskSource.GetResult(short token)
+	{
+		GetResult(token);
+	}
+
+	[DebuggerHidden]
+	public UniTaskStatus GetStatus(short token)
+	{
+		return core.GetStatus(token);
+	}
+
+	[DebuggerHidden]
+	public UniTaskStatus UnsafeGetStatus()
+	{
+		return core.UnsafeGetStatus();
+	}
+
+	[DebuggerHidden]
+	public void OnCompleted(Action<object> continuation, object state, short token)
+	{
+		core.OnCompleted(continuation, state, token);
+	}
+
+	[DebuggerHidden]
+	private bool TryReturn()
+	{
+		core.Reset();
+		return pool.TryPush(this);
+	}
+}
